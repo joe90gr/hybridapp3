@@ -49,7 +49,7 @@ gulp.task('karma', function (done) {
 });
 
 gulp.task('browserify',['karma'],  function() {
-    return browserify(JAVASCRIPTS + '/app/app.js')
+    return browserify(JAVASCRIPTS + '/app/app.js', {debug: true})
         .transform(babelify)
         .bundle()
         .pipe(source('main.js'))

@@ -4,3 +4,4 @@ node_modules/
 production/
 npm-debug.log
 html5app3.iml
+development/public/javascripts/main.js
