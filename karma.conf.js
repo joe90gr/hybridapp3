@@ -12,7 +12,6 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-        //{pattern: 'development/public/main-client-app/js/utils/polyfills/bind.js', included: true},
         'tests/**/*.js'
     ],
 

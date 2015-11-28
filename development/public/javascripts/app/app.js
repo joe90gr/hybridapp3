@@ -1,27 +1,45 @@
 var React = require('react');
 var ReactDom = require('react-dom');
 var timer = require('./joe');
-var ajax = require('../utils/xhr-request-api');
-
+var request = require('../utils/Xhr');
+var Dispatcher = require('flux').Dispatcher;
+var AppDispatcher = new Dispatcher();
 
 function success(res){
-    console.log(res.response);
-    //console.log(res.getAllResponseHeaders())
+    console.log(res);
 }
 
 function reject(error){
     console.log(error);
 }
 
-ajax.get(['/'],{'Content-Type': 'application/json'}).then(success, reject);
+request.fetch('/').then(success, reject)
 
-var put = { params:'{"put":"success"}'};
-var del = {"Content-Type": "application/json", params:'{"del":"success"}'};
-ajax.put(['/rest/somelist'],put).then(success, reject);
-ajax.del(['/rest/somelist'],del).then(success, reject);
+request.put('/rest/somelist',{
+    'Accept-Type': 'application-json',
+    'Content-Type': 'application/json'
+},{"put":"success"}).then(success, reject)
 
+request.del('/rest/somelist',{
+    'Accept-Type': 'application-json',
+    'Content-Type': 'application/json'
+},{"del":"success"}).then(success, reject)
 
-window.onload = function() {
 var comp = ReactDom.render(React.createElement(timer, null), document.getElementById('test'));
+AppDispatcher.register(function(action) {
+    switch(action.actionType) {
+        case "JOE":
+            console.log("JOE Triggered");
+            break;
+        case "JOE90":
+            console.log("JOE90 Triggered");
+            break;
+        default:
+        // no op
+    }
+});
 
-}
+AppDispatcher.dispatch({
+    actionType: "JOE",
+    text:""
+});
